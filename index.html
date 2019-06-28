@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<center>
+<font size="6em">
     <h1>JJJ's Planar shadow derivation.</h1>
 	<h2>Intersection between ray and plane.</h2>
 	<p>To explane about shadow projections, I will start from very basics.</p>
@@ -15,19 +17,95 @@
 	<p>So if there are origin of plane p0 and point on plane p and normal vector n of plane exist,</p>
 	<img src="images/vectors_on_plane.png">
 	<p>It should looks like this, we already know that a dot product of two perpendicular vectors are 0,</p>
-	<p>and actually, point p is intersection point between plane and ray.</p>
-	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
 	<i>n&middot;ray + d = 0</i>
+	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
+	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
 	<p>The equation of plane using point-normal form will looks like this after we insert intersection point to the equation.</p>
 	<img src="images/shadow_recive.png">
 	<p></p>
 	<i>n&middot;(P0 + t(P -L)) + d = 0, where t > 0</i>
+	<p></p>
 	<i>n&middot;t(P -L) = -n&middotP0 -d</i>
+	<p></p>
 	<i>t = <sup>-n&middotP0 -d</sup>/<sub>(P-L)n</sub>
 	<p>Now we know how to get intersection point between ray and plane, it is time to cast some shadow, but I will start with easy one.</p>
 	<h2>Case 1: directional light source.</h2>
 	<img src="images/directional.png">
 	<p>For directional shadow, we can use calculated t value with parametric equation of ray.
 	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
+	<p>so if we put point p = (p0, p1, p2, 1) into some matrix, it should evaluate s values,
+	<p>If we write this equation in form of matrix, it should looks like this : </p>
+	<table border="1">
+	  <tbody>
+		<tr>
+		  <td>n&middot;L - L<sub>x</sub>n<sub>x</sub></td>
+		  <td>-L<sub>x</sub>n<sub>y</sub></td>
+		  <td>-L<sub>x</sub>n<sub>z</sub></td>
+		  <td>-L<sub>x</sub>d</td>
+		</tr>
+		<tr>
+		  <td>-L<sub>y</sub>n<sub>x</sub></td>
+		  <td>n&middot;L - L<sub>y</sub>n<sub>y</sub></td>
+		  <td>-L<sub>y</sub>n<sub>z</sub></td>
+		  <td>-L<sub>y</sub>d</td>
+		</tr>
+		<tr>
+		  <td>-L<sub>z</sub>n<sub>x</sub></td>
+		  <td>-L<sub>z</sub>n<sub>y</sub></td>
+		  <td>n&middot;L - L<sub>z</sub>n<sub>z</sub></td>
+		  <td>-L<sub>z</sub>d</td>
+		</tr>
+		<tr>
+		  <td>0</td>
+		  <td>0</td>
+		  <td>0</td>
+		  <td>n&middot;L</td>
+		</tr>
+	  </tbody>
+	</table>
+	<p>We already know that it have to be divided by n&middot;L, so each rows should have P(n&middot;L),</p>
+	<p>for instance, first row offer P(n&middot;L) at the very first of that row, and rest of that row offers -(n&middot;P +d)L</p>
+	<p>So this matrix will evaluate directional light for any arbitrary plane.
+<h2>Case 2: point light source.</h2>
+<img src="images/point_light.png">
+	<p>For point light source, it is little difference, first, we have to calculate light vector for our vertices since it is not a directional light anymore.</p>
+	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
+	<p>so now this equation looks like this : </p>
+	<i>s = p - (<sup>n&middot;P+d</sup> / <sub>n&middot;(P-L)</sub>)(P-L)
+	<p> and our matrix should be changed a little bit.</p>
+	<table border="1">
+	  <tbody>
+		<tr>
+		  <td>n&middot;L +d - n<sub>x</sub>L<sub>x</sub></td>
+		  <td>-n<sub>y</sub>L<sub>x</sub></td>
+		  <td>-n<sub>z</sub>L<sub>x</sub></td>
+		  <td>-L<sub>x</sub>d</td>
+		</tr>
+		<tr>
+		  <td>-n<sub>x</sub>L<sub>y</sub></td>
+		  <td>n&middot;L +d - n<sub>y</sub>L<sub>y</sub></td>
+		  <td>-n<sub>z</sub>L<sub>y</sub></td>
+		  <td>-L<sub>y</sub>d</td>
+		</tr>
+		<tr>
+		  <td>-n<sub>x</sub>L<sub>z</sub></td>
+		  <td>-n<sub>y</sub>L<sub>z</sub></td>
+		  <td>n&middot;L +d - n<sub>z</sub>L<sub>z</sub></td>
+		  <td>-L<sub>z</sub>d</td>
+		</tr>
+		<tr>
+		  <td>-n<sub>x</sub></td>
+		  <td>-n<sub>y</sub></td>
+		  <td>-n<sub>z</sub></td>
+		  <td>n&middot;L</td>
+		</tr>
+	  </tbody>
+	</table>
+	<p>Major change in this matrix is denominator. It is now negative number, but it does not matter since we can negate the numerator.</p>
+	<p>Also, we can put +d for each rows to make n&middot;(P-L), since we already have nl from previous matrix and all we need is n&middot;P.</p>
+	<p>And depending the equation of plane, n&middot;P = d. also, we can negate this so we can get -n&middot;P. </p>
+	<p>By doing so, we can easily evaluate the shadow from point light source that cast on any arbitrary plane.</p>
+	</font>
+</center>
 </body>
 </html>
