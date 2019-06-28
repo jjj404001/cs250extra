@@ -17,23 +17,22 @@
 	<p>So if there are origin of plane p0 and point on plane p and normal vector n of plane exist,</p>
 	<img src="images/vectors_on_plane.png">
 	<p>It should looks like this, we already know that a dot product of two perpendicular vectors are 0,</p>
-	<i>n&middot;ray + d = 0</i>
-	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
+	<p>n&middot;(P - P0) = 0</p>
 	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
 	<p>The equation of plane using point-normal form will looks like this after we insert intersection point to the equation.</p>
-	<img src="images/shadow_recive.png">
-	<p></p>
 	<i>n&middot;(P0 + t(P -L)) + d = 0, where t > 0</i>
+	<p>It is also 0 since P0 and P is point on plane.
 	<p></p>
 	<i>n&middot;t(P -L) = -n&middotP0 -d</i>
 	<p></p>
 	<i>t = <sup>-n&middotP0 -d</sup>/<sub>(P-L)n</sub>
-	<p>Now we know how to get intersection point between ray and plane, it is time to cast some shadow, but I will start with easy one.</p>
+	<p>Now we know how to get intersection point between ray and plane, it is time to cast some shadow, I will start with easy one.</p>
 	<h2>Case 1: directional light source.</h2>
 	<img src="images/directional.png">
 	<p>For directional shadow, we can use calculated t value with parametric equation of ray.
 	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
-	<p>so if we put point p = (p0, p1, p2, 1) into some matrix, it should evaluate s values,
+	<p>Since directional light have same direction everywhere, I can just use L as vector.
+	<p>so if we put point p into some matrix, it should translate point to projected point on plane.
 	<p>If we write this equation in form of matrix, it should looks like this : </p>
 	<table border="1">
 	  <tbody>
