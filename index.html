@@ -3,11 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>JJJs derivation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h1>JJJ</h1>
-	<img src="images/example.png">
+    <h1>JJJ's Planar shadow derivation.</h1>
+	<h2>Intersection between ray and plane.</h2>
+	<p>To explane about shadow projections, I will start from very basics.</p>
+	<p>Basically, the dot product of two perpendicular vectors are 0,</p>
+	<p>because result from dot product is length of projection.</p>
+	<p>So if there are origin of plane p0 and point on plane p and normal vector n of plane exist,</p>
+	<img src="images/vectors_on_plane.png">
+	<p>It should looks like this, we already know that a dot product of two perpendicular vectors are 0,</p>
+	<p>and actually, point p is intersection point between plane and ray.</p>
+	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
+	<i>n&middot;ray + d = 0</i>
+	<p>The equation of plane using point-normal form will looks like this after we insert intersection point to the equation.</p>
+	<img src="images/shadow_recive.png">
+	<p></p>
+	<i>n&middot;(P0 + t(P -L)) + d = 0, where t > 0</i>
+	<i>n&middot;t(P -L) = -n&middotP0 -d</i>
+	<i>t = <sup>-n&middotP0 -d</sup>/<sub>(P-L)n</sub>
+	<p>Now we know how to get intersection point between ray and plane, it is time to cast some shadow, but I will start with easy one.</p>
+	<h2>Case 1: directional light source.</h2>
+	<img src="images/directional.png">
+	<p>For directional shadow, we can use calculated t value with parametric equation of ray.
+	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
 </body>
 </html>
