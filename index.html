@@ -19,7 +19,7 @@
 	<p>It should looks like this, we already know that a dot product of two perpendicular vectors are 0,</p>
 	<p>n&middot;(P - P0) = 0</p>
 	<p>We can evaluate this shared point between plane and ray using parametric equation of ray and plane.</p>
-	<p>The equation of plane using point-normal form will looks like this after we insert intersection point to the equation.</p>
+	<p>The equation of plane using point-normal form will looks like this after we insert parametric equation of ray for intersection point to the equation.</p>
 	<i>n&middot;(P0 + t(P -L)) + d = 0, where t > 0</i>
 	<p>It is also 0 since P0 and P is point on plane.
 	<p></p>
@@ -31,9 +31,9 @@
 	<img src="images/directional.png">
 	<p>For directional shadow, we can use calculated t value with parametric equation of ray.
 	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
-	<p>Since directional light have same direction everywhere, I can just use L as vector.
-	<p>so if we put point p into some matrix, it should translate point to projected point on plane.
-	<p>If we write this equation in form of matrix, it should looks like this : </p>
+	<p>Since directional light have same direction everywhere, I can just use L as global light vector.
+	<p>To get transform matrix, we have to convert above equation into matrix,</p>
+	<p>and it should looks like this : </p>
 	<table border="1">
 	  <tbody>
 		<tr>
@@ -64,10 +64,10 @@
 	</table>
 	<p>We already know that it have to be divided by n&middot;L, so each rows should have P(n&middot;L),</p>
 	<p>for instance, first row offer P(n&middot;L) at the very first of that row, and rest of that row offers -(n&middot;P +d)L</p>
-	<p>So this matrix will evaluate directional light for any arbitrary plane.
+	<p>This matrix will project shadow from directional light source for any arbitrary plane.
 <h2>Case 2: point light source.</h2>
 <img src="images/point_light.png">
-	<p>For point light source, it is little difference, first, we have to calculate light vector for our vertices since it is not a directional light anymore.</p>
+	<p>For point light source, it is little different, first, we have to calculate light vector for our vertices since it is not a directional light anymore.</p>
 	<i>s = p - (<sup>n&middot;p+d</sup> / <sub>n&middot;L</sub>)L
 	<p>so now this equation looks like this : </p>
 	<i>s = p - (<sup>n&middot;P+d</sup> / <sub>n&middot;(P-L)</sub>)(P-L)
@@ -102,7 +102,7 @@
 	</table>
 	<p>Major change in this matrix is denominator. It is now negative number, but it does not matter since we can negate the numerator.</p>
 	<p>Also, we can put +d for each rows to make n&middot;(P-L), since we already have nl from previous matrix and all we need is n&middot;P.</p>
-	<p>And depending the equation of plane, n&middot;P = d. also, we can negate this so we can get -n&middot;P. </p>
+	<p>And according to the equation of plane, n&middot;P = d. also, we can negate this so we can get -n&middot;P. </p>
 	<p>By doing so, we can easily evaluate the shadow from point light source that cast on any arbitrary plane.</p>
 	</font>
 </center>
